@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelový test B1 – 2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --cream:#f5f0e8;
+    --card:#ffffff;
+    --dark:#2d1f24;
+    --pink:#e8457a;
+    --pink-soft:#fdf0f4;
+    --muted:#888880;
+    --success:#2d8a60;
+    --success-soft:#e7f5ee;
+    --error:#c8465c;
+    --error-soft:#fbe9ec;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--dark);
+    font-family:'Poppins',system-ui,-apple-system,sans-serif;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+  .page{
+    max-width:760px;
+    margin:0 auto;
+    padding-inline:16px;
+    padding-block:28px 60px;
+  }
+  .hero{
+    background:var(--dark);
+    color:#fff;
+    border-radius:20px;
+    padding:26px 22px;
+    text-align:center;
+    margin-bottom:22px;
+  }
+  .hero .eyebrow{
+    display:inline-block;
+    background:var(--pink);
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:5px 14px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:clamp(24px,6vw,32px);
+    font-weight:800;
+    margin:0 0 8px;
+  }
+  .hero p{
+    font-size:14px;
+    color:#e9dfe2;
+    margin:0;
+    line-height:1.5;
+  }
+  .section-divider{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:34px 0 16px;
+  }
+  .section-divider:first-of-type{margin-top:8px;}
+  .section-divider .line{flex:1;height:1px;background:#e3d6db;}
+  .section-divider .label{
+    display:flex;align-items:center;gap:8px;
+    background:var(--pink);
+    color:#fff;
+    font-weight:800;
+    font-size:14px;
+    letter-spacing:.04em;
+    padding:9px 20px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .task{
+    background:var(--card);
+    border-radius:20px;
+    padding:22px 18px 26px;
+    margin-bottom:22px;
+    box-shadow:0 2px 14px rgba(45,31,36,0.06);
+    border:1px solid #eee3e7;
+  }
+  .task-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--dark);
+    color:#fff;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.03em;
+    padding:8px 16px;
+    border-radius:999px;
+    margin-bottom:16px;
+  }
+  .task-badge .pink-star{color:var(--pink);}
+  .instruction{
+    background:var(--pink-soft);
+    border-left:4px solid var(--pink);
+    border-radius:10px;
+    padding:12px 14px;
+    font-size:14px;
+    line-height:1.55;
+    margin-bottom:18px;
+  }
+  .reading{
+    background:var(--cream);
+    border-radius:14px;
+    padding:16px 16px;
+    font-size:14.5px;
+    line-height:1.7;
+    margin-bottom:18px;
+  }
+  .reading h3{margin:0 0 10px;font-size:16px;font-weight:700;}
+  .reading p{margin:0 0 10px;}
+  .reading p:last-child{margin-bottom:0;}
+  .offers{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  @media (max-width:520px){ .offers{grid-template-columns:1fr;} }
+  .offer{
+    background:var(--cream);
+    border-radius:14px;
+    padding:14px;
+    font-size:13.5px;
+    line-height:1.55;
+  }
+  .offer strong{display:block;font-size:13.5px;margin-bottom:6px;color:var(--dark);}
+  .offer .letter{
+    display:inline-flex;
+    align-items:center;justify-content:center;
+    width:22px;height:22px;
+    background:var(--pink);
+    color:#fff;
+    font-weight:700;
+    font-size:12px;
+    border-radius:50%;
+    margin-right:7px;
+  }
+  .email-box{
+    background:#fff;
+    border:1px solid #e5dde0;
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:18px;
+  }
+  .email-topbar{
+    background:#efe9ea;
+    padding:8px 14px;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .email-meta{
+    padding:10px 16px;
+    font-size:13px;
+    color:var(--muted);
+    border-bottom:1px solid #f0eaec;
+  }
+  .email-meta b{color:var(--dark);}
+  .email-body{
+    padding:14px 16px 16px;
+    font-size:14px;
+    line-height:1.65;
+  }
+  .email-body p{margin:0 0 10px;}
+  .email-body p:last-child{margin-bottom:0;}
+  .msg-label{
+    font-size:12px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--pink);
+    margin-bottom:6px;
+  }
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-bottom:18px;
+  }
+  @media (max-width:560px){ .two-col{grid-template-columns:1fr;} }
+  .q{
+    margin-bottom:16px;
+    padding-bottom:16px;
+    border-bottom:1px solid #f1ebed;
+  }
+  .q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .q-text{
+    font-size:14.5px;
+    font-weight:600;
+    margin-bottom:10px;
+    line-height:1.45;
+  }
+  .q-num{color:var(--pink);margin-right:5px;}
+  .answers{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .ans-btn{
+    font-family:inherit;
+    border:2px solid #e5dde0;
+    background:#fff;
+    color:var(--dark);
+    font-size:13.5px;
+    font-weight:600;
+    padding:8px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .ans-btn:hover{border-color:var(--pink);}
+  .ans-btn:focus-visible{outline:2px solid var(--pink);outline-offset:2px;}
+  .ans-btn.selected{background:var(--pink);border-color:var(--pink);color:#fff;}
+  .ans-btn.correct{background:var(--success);border-color:var(--success);color:#fff;}
+  .ans-btn.incorrect{background:var(--error);border-color:var(--error);color:#fff;}
+  .ans-btn.reveal{border-color:var(--success);color:var(--success);background:#fff;}
+  .ans-btn[disabled]{cursor:default;}
+  .text-ans{
+    font-family:inherit;
+    border:2px solid #e5dde0;
+    background:#fff;
+    color:var(--dark);
+    font-size:14px;
+    font-weight:500;
+    padding:9px 12px;
+    border-radius:10px;
+    width:100%;
+    max-width:260px;
+  }
+  .text-ans:focus{outline:2px solid var(--pink);border-color:var(--pink);}
+  .text-ans.correct{border-color:var(--success);background:var(--success-soft);}
+  .text-ans.incorrect{border-color:var(--error);background:var(--error-soft);}
+  .text-ans[disabled]{cursor:default;}
+  .explain{
+    display:none;
+    margin-top:10px;
+    background:var(--error-soft);
+    border-left:4px solid var(--error);
+    border-radius:8px;
+    padding:10px 12px;
+    font-size:13px;
+    line-height:1.5;
+    color:#5a2430;
+  }
+  .explain.show{display:block;}
+  .explain b{color:var(--error);}
+  .check-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:6px;
+  }
+  .check-btn{
+    font-family:inherit;
+    background:var(--pink);
+    color:#fff;
+    border:none;
+    font-size:14px;
+    font-weight:700;
+    padding:11px 22px;
+    border-radius:999px;
+    cursor:pointer;
+  }
+  .check-btn:hover{background:#d63868;}
+  .check-btn[disabled]{background:#e3b8c6;cursor:default;}
+  .hint-msg{font-size:13px;color:var(--muted);}
+  .score{
+    display:none;
+    font-weight:700;
+    font-size:14px;
+    padding:8px 16px;
+    border-radius:999px;
+  }
+  .score.show{display:inline-block;}
+  .score.good{background:var(--success-soft);color:var(--success);}
+  .score.bad{background:var(--error-soft);color:var(--error);}
+  .credit{text-align:center;font-size:12.5px;color:var(--muted);margin-top:4px;}
+  .footer-note{
+    text-align:center;
+    font-size:12.5px;
+    color:var(--muted);
+    line-height:1.6;
+    margin-top:8px;
+    padding:0 10px;
+  }
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;overflow:hidden;}
+  .watermark span{position:absolute;white-space:nowrap;font-size:13px;font-weight:700;color:var(--dark);transform:rotate(-28deg);}
+  .content{position:relative;z-index:1;}
+
+  .audio-wrap{
+    background:var(--cream);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:16px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .audio-wrap .audio-label{
+    font-size:13px;
+    font-weight:700;
+    color:var(--dark);
+    display:flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+  }
+  .audio-wrap audio{
+    flex:1;
+    min-width:200px;
+    height:36px;
+  }
+  .topic-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+  .topic-row:last-child{margin-bottom:0;}
+  .topic-text{
+    flex:1;
+    min-width:180px;
+    font-size:13.5px;
+    line-height:1.5;
+    background:var(--cream);
+    border-radius:10px;
+    padding:10px 12px;
+  }
+  .topic-picker{display:flex;gap:6px;flex-wrap:wrap;}
+  .topic-btn{
+    font-family:inherit;
+    border:2px solid #e5dde0;
+    background:#fff;
+    color:var(--dark);
+    font-size:13px;
+    font-weight:700;
+    width:34px;height:34px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  .topic-btn:hover{border-color:var(--pink);}
+  .topic-btn.selected{background:var(--pink);border-color:var(--pink);color:#fff;}
+  .topic-btn.correct{background:var(--success);border-color:var(--success);color:#fff;}
+  .topic-btn.incorrect{background:var(--error);border-color:var(--error);color:#fff;}
+  .topic-btn.reveal{border-color:var(--success);color:var(--success);background:#fff;}
+  .topics-legend{
+    display:flex;flex-wrap:wrap;gap:8px;
+    font-size:12.5px;
+    background:var(--pink-soft);
+    border-radius:10px;
+    padding:10px 12px;
+    margin-bottom:16px;
+  }
+  .topics-legend b{color:var(--pink);}
+
+  .display-card{
+    background:var(--cream);
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .display-card:last-child{margin-bottom:0;}
+  .display-card h4{margin:0 0 8px;font-size:14.5px;font-weight:700;}
+  .display-card ul{margin:8px 0 0;padding-left:20px;font-size:13.5px;line-height:1.6;}
+  .display-card .min-words{
+    display:inline-block;
+    margin-top:10px;
+    font-size:12px;
+    font-weight:700;
+    color:var(--pink);
+    background:var(--pink-soft);
+    padding:4px 10px;
+    border-radius:999px;
+  }
+  .two-display{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:560px){ .two-display{grid-template-columns:1fr;} }
+  .icon-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:14px;
+  }
+  @media (max-width:480px){ .icon-grid{grid-template-columns:repeat(2,1fr);} }
+  .icon-tile{
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    text-align:center;
+    position:relative;
+    border:1px solid #eee3e7;
+    aspect-ratio:1/1;
+  }
+  .icon-tile img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .note-inline{
+    font-size:12.5px;
+    color:var(--muted);
+    font-style:italic;
+    margin-top:6px;
+  }
+
+  .gate-overlay{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:var(--dark);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .gate-card{
+    background:var(--card);
+    border-radius:20px;
+    padding:32px 26px;
+    max-width:320px;
+    width:100%;
+    text-align:center;
+    box-shadow:0 10px 40px rgba(0,0,0,0.3);
+  }
+  .gate-card .eyebrow{
+    display:inline-block;
+    background:var(--pink);
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:5px 14px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .gate-card h2{margin:0 0 8px;font-size:19px;font-weight:800;color:var(--dark);}
+  .gate-card p{margin:0 0 18px;font-size:13.5px;color:var(--muted);line-height:1.5;}
+  .gate-input{
+    font-family:inherit;
+    width:100%;
+    border:2px solid #e5dde0;
+    border-radius:10px;
+    padding:11px 14px;
+    font-size:15px;
+    text-align:center;
+    margin-bottom:12px;
+  }
+  .gate-input:focus{outline:none;border-color:var(--pink);}
+  .gate-btn{
+    font-family:inherit;
+    background:var(--pink);
+    color:#fff;
+    border:none;
+    font-size:14px;
+    font-weight:700;
+    padding:11px 22px;
+    border-radius:999px;
+    cursor:pointer;
+    width:100%;
+  }
+  .gate-btn:hover{background:#d63868;}
+  .gate-error{
+    display:none;
+    color:var(--error);
+    font-size:13px;
+    font-weight:600;
+    margin-top:10px;
+  }
+  .gate-error.show{display:block;}
+  
+</style>
+
+
+<style>
+  .q-sub{font-size:13px;font-weight:500;color:var(--muted);margin:-4px 0 10px;}
+  .ans-col{display:flex;flex-direction:column;align-items:stretch;gap:8px;}
+  .ans-col .ans-btn{text-align:left;}
+  .letters .ans-btn{min-width:42px;padding:8px 0;text-align:center;}
+  .reading .sub{font-weight:700;margin:14px 0 4px;}
+  .reading .sub:first-of-type{margin-top:0;}
+  .persons{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:18px;}
+  .person{background:var(--cream);border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.6;}
+  .person b{color:var(--pink);}
+  .sticky-audio{position:sticky;top:8px;z-index:5;box-shadow:0 4px 18px rgba(45,31,36,.10);background:#fff;border:1px solid #eee3e7;}
+  .timer-box{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--dark);color:#fff;border-radius:14px;padding:10px 14px;margin-bottom:16px;font-size:13.5px;}
+  .timer-box .t{font-weight:800;font-size:18px;font-variant-numeric:tabular-nums;min-width:64px;}
+  .timer-box button{font-family:inherit;border:none;border-radius:999px;padding:7px 14px;font-weight:700;font-size:12.5px;cursor:pointer;background:var(--pink);color:#fff;}
+  .timer-box button.ghost{background:transparent;border:1px solid #6b5560;}
+  .timer-box.over .t{color:#ffb3c7;}
+  .write-area{width:100%;min-height:220px;font-family:inherit;font-size:14.5px;line-height:1.6;border:2px solid #e5dde0;border-radius:12px;padding:12px 14px;resize:vertical;-webkit-user-select:text;user-select:text;background:#fff;color:var(--dark);}
+  .write-area:focus{outline:none;border-color:var(--pink);}
+  .wc{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-top:8px;color:var(--muted);}
+  .wc .n{font-weight:800;padding:4px 12px;border-radius:999px;background:var(--error-soft);color:var(--error);}
+  .wc .n.ok{background:var(--success-soft);color:var(--success);}
+  .q-label{font-size:14px;font-weight:700;margin:16px 0 8px;}
+  .q-label:first-child{margin-top:0;}
+  .letter-head{background:var(--cream);border-radius:14px;padding:14px 16px;font-size:14px;line-height:1.6;font-style:italic;margin-bottom:16px;}
+  .choice{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+  @media (max-width:520px){.choice{grid-template-columns:1fr;}}
+  .choice .c{background:var(--cream);border-radius:14px;padding:14px;font-size:14px;line-height:1.5;}
+  .choice .c .letter{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:var(--pink);color:#fff;font-weight:700;font-size:12px;border-radius:50%;margin-right:8px;}
+  .section-total{display:none;background:#fff;border:2px solid var(--success);border-radius:16px;padding:14px 16px;margin:-6px 0 22px;font-size:14px;line-height:1.55;}
+  .section-total.show{display:block;}
+  .section-total.fail{border-color:var(--error);}
+  .section-total b{font-size:16px;}
+  .intro-list{margin:10px 0 0;padding-left:0;list-style:none;font-size:13.5px;color:#e9dfe2;line-height:1.7;}
+  .tip{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="watermark" id="watermark"></div>
+<div class="page content" id="page-content">
+<a href="../" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--pink);text-decoration:none;margin-bottom:14px">← Zpět na přehled testů</a>
+<div class="hero"><span class="eyebrow">✦ Modelová varianta – občanství</span><h1>B1 k občanství — zkouška nanečisto</h1><p>Oficiální modelový test ke zkoušce z češtiny pro účely udělení státního občanství (ÚJOP UK). Čtení a poslech se kontrolují automaticky, psaní napíšete přímo tady. Mluvení si projdeme spolu na lekci.</p><ul class="intro-list"><li>📖 Čtení – 50 min · 25 bodů</li><li>🎧 Poslech – 30–35 min · 25 bodů</li><li>✍️ Psaní – 60 min · 25 bodů</li><li>🗣️ Mluvení – 15–18 min (ve dvojici)</li></ul></div>
+<div class="section-divider"><div class="line"></div><div class="label">📖 Čtení</div><div class="line"></div></div>
+<div class="timer-box" data-min="50"><span>⏱️ Čtení – 50 minut</span><span class="t"></span><button class="start">▶ Spustit</button><button class="reset ghost">↺ Znovu</button></div>
+<div class="task" id="ct1"><div class="task-badge"><span class="pink-star">✦</span> ČTENÍ, ÚLOHA Č. 1 (6 bodů)</div><div class="instruction">Přečtěte si text. Potom napište, jestli jsou věty 1–6 pravda (ANO), nebo nejsou pravda (NE).</div><div class="reading"><h3>🚆 Vyzkoušejte SONE+</h3>
+<ul style="margin:0 0 10px;padding-left:20px"><li>síťová jízdenka jen za 150 Kč</li><li>platí celý den v sobotu, nebo neděli*</li><li>je určena pro společnou cestu maximálně pěti cestujících ve 2. vozové třídě; nejvýše dva z nich mohou být starší 15 let</li><li>neplatí v rychlících a vlacích vyšší kvality (IC, EC, SC)</li><li>v příhraničí můžete SONE+ navíc použít pro cesty do stanic na druhé straně státních hranic</li><li>jako spolucestujícího na jízdenku SONE+ nelze uznat psa</li></ul>
+<p>Předprodej síťové jízdenky SONE+ jsou 2 měsíce. Je možné ji koupit ve všech pokladnách Českých drah (ČD) nebo u průvodčího ve vlaku.</p>
+<p style="font-size:13px">*Platnost jízdenky končí vždy o půlnoci dne, pro který byla zakoupena.</p></div>
+<div class="tip" style="margin:-8px 0 14px">Příklad: <b>0.</b> Jízdenka SONE+ stojí 150 korun. → <b>ANO</b></div><div id="ct1-q"><div class="q" data-correct="NE"><div class="q-text"><span class="q-num">1.</span>Jízdenku SONE+ za 150 Kč může využít až 5 dospělých lidí.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>NE</b>.</div></div><div class="q" data-correct="NE"><div class="q-text"><span class="q-num">2.</span>Jízdenka SONE+ za 150 Kč je platná ve všech vlacích ČD.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>NE</b>.</div></div><div class="q" data-correct="ANO"><div class="q-text"><span class="q-num">3.</span>S jízdenkou SONE+ můžete jet i za hranice.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>ANO</b>.</div></div><div class="q" data-correct="NE"><div class="q-text"><span class="q-num">4.</span>Jízdenku SONE+ můžete využít také pro psa.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>NE</b>.</div></div><div class="q" data-correct="ANO"><div class="q-text"><span class="q-num">5.</span>Jízdenku SONE+ je možné koupit 2 měsíce před cestou.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>ANO</b>.</div></div><div class="q" data-correct="NE"><div class="q-text"><span class="q-num">6.</span>Jedna jízdenka SONE+ platí celý víkend.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>NE</b>.</div></div></div><div class="check-row"><button class="check-btn" data-task="ct1-q">Zkontrolovat odpovědi</button><span class="hint-msg" data-hint="ct1-q"></span><span class="score" data-score="ct1-q"></span></div></div>
+<div class="task" id="ct2"><div class="task-badge"><span class="pink-star">✦</span> ČTENÍ, ÚLOHA Č. 2 (8 bodů)</div><div class="instruction">Přečtěte si text a vyberte u úkolů 7–14 jedno správné řešení A–D.</div><div class="reading"><h3>👩‍⚕️ Lidé mezi námi</h3>
+<p>Lékařka Zuzana Škodová je předsedkyní České lékařské homeopatické společnosti. Od roku 2002 jezdí zdarma léčit pacienty na kliniku v Nepálu. Má dva syny a kromě své profese se ještě zabývá fotografováním a zpěvem.</p>
+<p>„Vždycky jsem chtěla odjet někam daleko a pomáhat,“ říká Zuzana Škodová. „Když jsem studovala medicínu, byla mým snem Afrika,“ dodává. Na první dalekou cestu, která ji místo do Afriky zavedla do Asie, ale dlouho čekala. „Ve chvíli, kdy se po revoluci v roce 1989 všechny možnosti otevřely, jsem otěhotněla. Byla jsem pět let s dětmi na mateřské dovolené, takže žádné cestování nebylo.“</p>
+<p>Sen o cestování se jí splnil po letech. Příležitost k daleké cestě přišla poprvé v září 2002. Díky projektu holandských lékařů, kteří mají nemocnici v Nepálu, odjela Zuzana na měsíc léčit lidi do města Bhaktapur. „Je to daleko, takže jsem se bála, ale pak se mi tam moc líbilo,“ říká. Příští rok v únoru pojede do Nepálu už počtvrté. „Pracuju tam zadarmo, jen letenku platí holandská organizace. Lékaři se v nemocnici střídají každý měsíc.“</p>
+<p>Pacienti jsou v Nepálu stejní jako u nás. „Ale lidé v Nepálu nechodí k doktorovi s rýmou a chřipkou, obvykle mají horší problémy. Taky se lékařů bojí, navíc mluvíme cizími jazyky, ale teď už si na nás zvykli,“ vypráví Zuzana.</p>
+<p>Kromě medicíny se Zuzana v Nepálu věnuje také svému koníčku — fotografování. „Fotografovala jsem od dětství, můj děda byl fotograf a léto jsme trávili spolu na venkově. Byly to nezapomenutelné zážitky, proto mě to baví. Od té doby fotografuju pořád. Svůj první fotoaparát jsem vyhrála v soutěži, když mi bylo osm let,“ vypráví Zuzana. Letos se konala i její první výstava, na které byly fotky z Nepálu.</p>
+<p>Zuzana říká, že není lehké žít s někým, jako je ona. „Manžel není rád, když mu řeknu, že jedu na měsíc do Nepálu, nebo když uprostřed noci jedu navštívit pacienta. Mnohokrát jsem z toho opravdu unavená, ale je to moje práce a já ji miluju a chci ji dělat. Nestěžuju si.“</p></div><div id="ct2-q"><div class="q" data-correct="A"><div class="q-text"><span class="q-num">7.</span>Co dělá Zuzana Škodová?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Léčí chudé pacienty v Nepálu.</button><button class="ans-btn" data-val="B">B) Připravuje výstavu fotografií v Nepálu.</button><button class="ans-btn" data-val="C">C) Vede kliniku pro chudé pacienty v Africe.</button><button class="ans-btn" data-val="D">D) Stará se o projekt pro lékaře v Holandsku.</button></div><div class="explain">✗ Správně: <b>A) Léčí chudé pacienty v Nepálu.</b></div></div><div class="q" data-correct="A"><div class="q-text"><span class="q-num">8.</span>Proč Zuzana Škodová neodjela do Afriky?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Protože byla doma s dětmi.</button><button class="ans-btn" data-val="B">B) Protože studovala medicínu.</button><button class="ans-btn" data-val="C">C) Protože čekala na cestu do Asie.</button><button class="ans-btn" data-val="D">D) Protože v roce 1989 byla revoluce.</button></div><div class="explain">✗ Správně: <b>A) Protože byla doma s dětmi.</b></div></div><div class="q" data-correct="C"><div class="q-text"><span class="q-num">9.</span>Jak dlouho Zuzana Škodová jezdí pracovat do Nepálu?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Čtyři roky.</button><button class="ans-btn" data-val="B">B) Jeden měsíc.</button><button class="ans-btn" data-val="C">C) Od roku 2002.</button><button class="ans-btn" data-val="D">D) Od února tohoto roku.</button></div><div class="explain">✗ Správně: <b>C) Od roku 2002.</b></div></div><div class="q" data-correct="B"><div class="q-text"><span class="q-num">10.</span>Co říká Zuzana Škodová o pacientech v Nepálu?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Nemají rýmu a chřipku.</button><button class="ans-btn" data-val="B">B) Mají trochu strach z lékařů.</button><button class="ans-btn" data-val="C">C) Nechtějí mluvit cizími jazyky.</button><button class="ans-btn" data-val="D">D) Nemůžou si zvyknout na cizince.</button></div><div class="explain">✗ Správně: <b>B) Mají trochu strach z lékařů.</b></div></div><div class="q" data-correct="D"><div class="q-text"><span class="q-num">11.</span>Proč Zuzana Škodová ráda fotografuje?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Protože na soutěži vyhrála fotoaparát.</button><button class="ans-btn" data-val="B">B) Protože připravuje výstavu fotografií z Nepálu.</button><button class="ans-btn" data-val="C">C) Protože se fotografování věnovala už na medicíně.</button><button class="ans-btn" data-val="D">D) Protože má krásné zážitky z fotografování s dědečkem.</button></div><div class="explain">✗ Správně: <b>D) Protože má krásné zážitky z fotografování s dědečkem.</b></div></div><div class="q" data-correct="C"><div class="q-text"><span class="q-num">12.</span>Má Zuzana Škodová ráda svou práci?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Ne, chtěla by mít lehčí život.</button><button class="ans-btn" data-val="B">B) Ne, často si stěžuje na svoji práci.</button><button class="ans-btn" data-val="C">C) Ano, ale je ze své práce často unavená.</button><button class="ans-btn" data-val="D">D) Ano, ale hádá se kvůli práci s manželem.</button></div><div class="explain">✗ Správně: <b>C) Ano, ale je ze své práce často unavená.</b></div></div><div class="q" data-correct="D"><div class="q-text"><span class="q-num">13.</span>O čem je text Lidé mezi námi?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) O těžkém životě lékařů v Asii.</button><button class="ans-btn" data-val="B">B) O náročné práci lékařů v cizině.</button><button class="ans-btn" data-val="C">C) O zajímavém životě lékařky v Africe.</button><button class="ans-btn" data-val="D">D) O práci a koníčcích lékařky na cestách.</button></div><div class="explain">✗ Správně: <b>D) O práci a koníčcích lékařky na cestách.</b></div></div><div class="q" data-correct="B"><div class="q-text"><span class="q-num">14.</span>Co je cílem textu Lidé mezi námi?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Informovat o novém projektu pro chudé pacienty.</button><button class="ans-btn" data-val="B">B) Seznámit čtenáře se životem jedné zajímavé ženy.</button><button class="ans-btn" data-val="C">C) Pozvat čtenáře na výstavu fotografií Zuzany Škodové.</button><button class="ans-btn" data-val="D">D) Nabídnout čtenářům práci na klinice pro chudé v Nepálu.</button></div><div class="explain">✗ Správně: <b>B) Seznámit čtenáře se životem jedné zajímavé ženy.</b></div></div></div><div class="check-row"><button class="check-btn" data-task="ct2-q">Zkontrolovat odpovědi</button><span class="hint-msg" data-hint="ct2-q"></span><span class="score" data-score="ct2-q"></span></div></div>
+<div class="task" id="ct3"><div class="task-badge"><span class="pink-star">✦</span> ČTENÍ, ÚLOHA Č. 3 – BARVY (6 bodů)</div><div class="instruction">Přečtěte si texty 15–20 a titulky A–H. Vyberte ke každému textu jeden správný titulek. <b>Dva titulky nebudete potřebovat.</b></div><div class="topics-legend" style="flex-direction:column;gap:4px"><span><b>A)</b> Co o vás řeknou barvy</span><span><b>B)</b> Barvíte si vlasy sama?</span><span><b>C)</b> Světlá auta jsou populární</span><span><b>D)</b> V červené vás nepřehlédne!</span><span><b>E)</b> Vyberte si dokonalou barvu vlasů</span><span><b>F)</b> Jarní módní doplňky hrají všemi barvami</span><span><b>G)</b> Staré, nové, bourané? Hlavně, že je barevné!</span><span><b>H)</b> Nebojte se na podzim barev – poradíme, které vám budou slušet</span><span style="color:var(--muted)"><b>I)</b> Advent má správně mít fialovou barvu <i>(příklad k textu 0)</i></span></div><div class="reading" style="font-size:13.5px"><b>0)</b> Víte, že původní barvou adventu je fialová podle barvy oblečení pro kněze? Fialová se však v minulosti skoro neobjevovala, a tak se místo ní začala používat červená. Fialovou v přírodě nenajdete, takže chcete-li mít hezký adventní věnec, bez červené to nepůjde. → <b>I</b></div><div id="ct3-q"><div class="q" data-correct="C"><div class="q-text"><span class="q-num">15.</span><span style="font-weight:500">Mnozí zákazníci si barvu svého nového auta dlouho vybírají. Někdo se při výběru drží módy, část řidičů dává přednost barvám, které jsou na silnici dobře vidět. Nejvíce se prodávají auta ve světlých barvách. Nejoblíbenější barva je stříbrná a hned po ní bílá.</span></div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button><button class="ans-btn" data-val="F">F</button><button class="ans-btn" data-val="G">G</button><button class="ans-btn" data-val="H">H</button></div><div class="explain">✗ Správně: <b>C</b> – Světlá auta jsou populární</div></div><div class="q" data-correct="E"><div class="q-text"><span class="q-num">16.</span><span style="font-weight:500">Pokud si barvíte vlasy, je velký problém vybrat si správný odstín. Přesto všichni víme, že dobrá barva vlasů je velmi důležitá. Proto vám radíme: pokud máte světlou pleť, vyberte si raději blond barvu. Máte-li růžovou pleť, je dobré zvolit odstíny hnědé.</span></div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button><button class="ans-btn" data-val="F">F</button><button class="ans-btn" data-val="G">G</button><button class="ans-btn" data-val="H">H</button></div><div class="explain">✗ Správně: <b>E</b> – Vyberte si dokonalou barvu vlasů</div></div><div class="q" data-correct="A"><div class="q-text"><span class="q-num">17.</span><span style="font-weight:500">Věděli jste, že žlutá je barva exhibicionistů a v hnědé ukazujete, že nemáte ambice? Každá barva něco říká a působí na lidi okolo vás. Oranžová je barva temperamentních lidí. Ve fialové barvě budete vypadat jako chytrý člověk, který všechno ví.</span></div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button><button class="ans-btn" data-val="F">F</button><button class="ans-btn" data-val="G">G</button><button class="ans-btn" data-val="H">H</button></div><div class="explain">✗ Správně: <b>A</b> – Co o vás řeknou barvy</div></div><div class="q" data-correct="G"><div class="q-text"><span class="q-num">18.</span><span style="font-weight:500">Na jaře otevřeli v Koreji autobazar pro ženy. Protože pro většinu žen je nejdůležitější vzhled auta, jsou tady nová i použitá auta uspořádána podle barev. Napravo jsou červená auta, nalevo žlutá, uprostřed bílá, za nimi stříbrná a vzadu černá, vpředu pak nejžhavější novinky.</span></div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button><button class="ans-btn" data-val="F">F</button><button class="ans-btn" data-val="G">G</button><button class="ans-btn" data-val="H">H</button></div><div class="explain">✗ Správně: <b>G</b> – Staré, nové, bourané? Hlavně, že je barevné!</div></div><div class="q" data-correct="H"><div class="q-text"><span class="q-num">19.</span><span style="font-weight:500">Zelená, růžová a oranžová. To jsou barvy, které budou letošní říjen a listopad populární. Zelená barva sluší nejvíc zrzkám. Růžová se velmi dobře kombinuje s neutrálními barvami, jako je bílá a černá. Oranžová je vhodná hlavně pro ženy, kterým sluší teplé barvy.</span></div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button><button class="ans-btn" data-val="F">F</button><button class="ans-btn" data-val="G">G</button><button class="ans-btn" data-val="H">H</button></div><div class="explain">✗ Správně: <b>H</b> – Nebojte se na podzim barev – poradíme, které vám budou slušet</div></div><div class="q" data-correct="D"><div class="q-text"><span class="q-num">20.</span><span style="font-weight:500">Podle průzkumu psychologů má červená barva vliv na psychiku mužů. Žena v červeném oblečení je pro muže atraktivnější a dokonce v nich vzbuzuje více zamilovanosti. „Je zajímavé, když člověk zjistí, že barva může mít takový vliv na naše chování bez našeho vědomí,“ říkají psychologové.</span></div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button><button class="ans-btn" data-val="F">F</button><button class="ans-btn" data-val="G">G</button><button class="ans-btn" data-val="H">H</button></div><div class="explain">✗ Správně: <b>D</b> – V červené vás nepřehlédne!</div></div></div><div class="check-row"><button class="check-btn" data-task="ct3-q">Zkontrolovat odpovědi</button><span class="hint-msg" data-hint="ct3-q"></span><span class="score" data-score="ct3-q"></span></div></div>
+<div class="task" id="ct4"><div class="task-badge"><span class="pink-star">✦</span> ČTENÍ, ÚLOHA Č. 4 – POŘADÍ TEXTU (5 bodů)</div><div class="instruction">Seřaďte části textu do správného pořadí. K číslům 21–25 přiřaďte části A–E. <b>Část F je začátek textu.</b></div><div class="reading"><h3>👩 Alice Masaryková</h3><p><b>Začátek (část F):</b> Alice Masaryková se narodila 3. května 1879. Po střední škole pokračovala dál ve studiu. Na vysokých školách vystudovala tři obory.</p></div><div class="offers"><div class="offer"><strong><span class="letter">A</span>Část A</strong>Ve zdravotnictví přestala pracovat až po smrti své matky. Po této tragické události se Alice starala o „prezidentskou“ domácnost a pomáhala svému otci, prezidentu T. G. Masarykovi.</div><div class="offer"><strong><span class="letter">B</span>Část B</strong>Během práce v této škole pozvala do Prahy americké zdravotní sestry, které jí pomáhaly zlepšovat vzdělání. Alice měla ve společnosti vysokou pozici, a proto se škola rychle stala populární.</div><div class="offer"><strong><span class="letter">C</span>Část C</strong>Kromě Karlovy univerzity v Praze vystudovala univerzity v Berlíně a Chicagu. Po první světové válce se aktivně účastnila veřejného života v Československu. V roce 1919 založila organizaci Československý červený kříž a po dobu 20 let ji vedla.</div><div class="offer"><strong><span class="letter">D</span>Část D</strong>Pracovala například na úpravách jeho rezidence – Pražského hradu. Díky svému otci se setkala s mnoha významnými osobnostmi. Po druhé světové válce se rozhodla odejít ze své rodné země a emigrovala do USA, kde žila až do své smrti.</div><div class="offer"><strong><span class="letter">E</span>Část E</strong>Za jejího vedení se tato organizace věnovala charitativní činnosti. Alice se také velmi zajímala o ošetřovatelství. Od roku 1920 byla ředitelkou České ošetřovatelské školy.</div></div><div id="ct4-q"><div class="q" data-correct="C"><div class="q-text"><span class="q-num">21.</span>1. část textu (po začátku F)</div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button></div><div class="explain">✗ Správně: <b>C</b></div></div><div class="q" data-correct="E"><div class="q-text"><span class="q-num">22.</span>2. část textu (po předchozí části)</div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button></div><div class="explain">✗ Správně: <b>E</b></div></div><div class="q" data-correct="B"><div class="q-text"><span class="q-num">23.</span>3. část textu (po předchozí části)</div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button></div><div class="explain">✗ Správně: <b>B</b></div></div><div class="q" data-correct="A"><div class="q-text"><span class="q-num">24.</span>4. část textu (po předchozí části)</div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button></div><div class="explain">✗ Správně: <b>A</b></div></div><div class="q" data-correct="D"><div class="q-text"><span class="q-num">25.</span>5. část textu (po předchozí části)</div><div class="answers letters"><button class="ans-btn" data-val="A">A</button><button class="ans-btn" data-val="B">B</button><button class="ans-btn" data-val="C">C</button><button class="ans-btn" data-val="D">D</button><button class="ans-btn" data-val="E">E</button></div><div class="explain">✗ Správně: <b>D</b></div></div></div><div class="check-row"><button class="check-btn" data-task="ct4-q">Zkontrolovat odpovědi</button><span class="hint-msg" data-hint="ct4-q"></span><span class="score" data-score="ct4-q"></span></div></div>
+<div class="section-total" data-name="Čtení" data-ratio="0.68" data-tasks="ct1-q,ct2-q,ct3-q,ct4-q"></div>
+<div class="section-divider"><div class="line"></div><div class="label">🎧 Poslech</div><div class="line"></div></div>
+<div class="instruction" style="background:#fff;border:1px solid #eee3e7;border-left:4px solid var(--pink);">Poslech má jednu nahrávku pro všechny 4 úlohy (asi 30 minut). Pusťte ji a nezastavujte, stejně jako na zkoušce. Každou část uslyšíte 2×. Přehrávač zůstane nahoře, i když budete posouvat stránku.</div><div class="audio-wrap sticky-audio"><span class="audio-label">🔊 Celá nahrávka</span><audio controls preload="metadata" src="audio/poslech.mp3"></audio></div>
+<div class="task" id="ps1"><div class="task-badge"><span class="pink-star">✦</span> POSLECH, ÚLOHA Č. 1 – DIALOGY (6 bodů)</div><div class="instruction">Uslyšíte čtyři dialogy. U úkolů 1–6 vyberte jedno správné řešení A–D. Každý dialog uslyšíte dvakrát.</div><div id="ps1-q"><div class="msg-label">Dialog 1</div><div class="q" data-correct="A"><div class="q-text"><span class="q-num">1.</span>Proč Karel volá k Provazníkům?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Karel chce s panem Provazníkem mluvit o zkoušce.</button><button class="ans-btn" data-val="B">B) Karel ztratil číslo mobilního telefonu pana Provazníka.</button><button class="ans-btn" data-val="C">C) Karel zapomněl telefonní číslo pana magistra Provazníka.</button><button class="ans-btn" data-val="D">D) Karel chce mluvit s paní Provazníkovou kvůli jejímu manželovi.</button></div><div class="explain">✗ Správně: <b>A) Karel chce s panem Provazníkem mluvit o zkoušce.</b></div></div><div class="q" data-correct="B"><div class="q-text"><span class="q-num">2.</span>Kdy Karel zavolá znovu?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Zítra.</button><button class="ans-btn" data-val="B">B) Za hodinu.</button><button class="ans-btn" data-val="C">C) V 17 hodin.</button><button class="ans-btn" data-val="D">D) Ve 13 hodin.</button></div><div class="explain">✗ Správně: <b>B) Za hodinu.</b></div></div><div class="msg-label" style="margin-top:14px">Dialog 2</div><div class="q" data-correct="C"><div class="q-text"><span class="q-num">3.</span>V kolik hodin maminka končí v práci?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) V 18:30.</button><button class="ans-btn" data-val="B">B) V 18:00.</button><button class="ans-btn" data-val="C">C) V 17:30.</button><button class="ans-btn" data-val="D">D) V 17:00.</button></div><div class="explain">✗ Správně: <b>C) V 17:30.</b></div></div><div class="q" data-correct="B"><div class="q-text"><span class="q-num">4.</span>Na co měl syn přinést peníze do školy?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Na třídní schůzky.</button><button class="ans-btn" data-val="B">B) Na školní výlet.</button><button class="ans-btn" data-val="C">C) Na nákup.</button><button class="ans-btn" data-val="D">D) Na kytku.</button></div><div class="explain">✗ Správně: <b>B) Na školní výlet.</b></div></div><div class="msg-label" style="margin-top:14px">Dialog 3</div><div class="q" data-correct="C"><div class="q-text"><span class="q-num">5.</span>Jakou velikost trička zákazník potřebuje?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) L</button><button class="ans-btn" data-val="B">B) M</button><button class="ans-btn" data-val="C">C) XL</button><button class="ans-btn" data-val="D">D) XXL</button></div><div class="explain">✗ Správně: <b>C) XL</b></div></div><div class="msg-label" style="margin-top:14px">Dialog 4</div><div class="q" data-correct="D"><div class="q-text"><span class="q-num">6.</span>Jak daleko je náměstí Míru?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Půl kilometru pěšky.</button><button class="ans-btn" data-val="B">B) Dva kilometry pěšky.</button><button class="ans-btn" data-val="C">C) Jednu stanici metrem.</button><button class="ans-btn" data-val="D">D) Dvě zastávky tramvají.</button></div><div class="explain">✗ Správně: <b>D) Dvě zastávky tramvají.</b></div></div></div><div class="check-row"><button class="check-btn" data-task="ps1-q">Zkontrolovat odpovědi</button><span class="hint-msg" data-hint="ps1-q"></span><span class="score" data-score="ps1-q"></span></div></div>
+<div class="task" id="ps2"><div class="task-badge"><span class="pink-star">✦</span> POSLECH, ÚLOHA Č. 2 – ROZHOVOR (8 bodů)</div><div class="instruction">Uslyšíte dialog. U úkolů 7–14 vyberte jedno správné řešení A–D. Dialog uslyšíte dvakrát.</div><div id="ps2-q"><div class="q" data-correct="A"><div class="q-text"><span class="q-num">7.</span>Kdo je Gabriela Demeterová?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Známá česká hudebnice.</button><button class="ans-btn" data-val="B">B) Učitelka pražské konzervatoře.</button><button class="ans-btn" data-val="C">C) Nejkrásnější houslistka roku 2005.</button><button class="ans-btn" data-val="D">D) Vítězka mezinárodní soutěže v Praze.</button></div><div class="explain">✗ Správně: <b>A) Známá česká hudebnice.</b></div></div><div class="q" data-correct="B"><div class="q-text"><span class="q-num">8.</span>Proč se Gabriela odstěhovala na venkov?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Protože nemá ráda Prahu.</button><button class="ans-btn" data-val="B">B) Protože jí při práci vadí hluk.</button><button class="ans-btn" data-val="C">C) Protože se tam odstěhoval její partner.</button><button class="ans-btn" data-val="D">D) Protože lidé v Praze pracují moc rychle.</button></div><div class="explain">✗ Správně: <b>B) Protože jí při práci vadí hluk.</b></div></div><div class="q" data-correct="D"><div class="q-text"><span class="q-num">9.</span>Odkud jsou nejstarší housle, na které Gabriela hraje?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Z Itálie.</button><button class="ans-btn" data-val="B">B) Od rodičů.</button><button class="ans-btn" data-val="C">C) Z konzervatoře.</button><button class="ans-btn" data-val="D">D) Z Národního muzea.</button></div><div class="explain">✗ Správně: <b>D) Z Národního muzea.</b></div></div><div class="q" data-correct="C"><div class="q-text"><span class="q-num">10.</span>Proč Gabriela zapomněla svoje housle v restauraci?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Protože si housle vzala servírka.</button><button class="ans-btn" data-val="B">B) Protože schovala housle pod stůl.</button><button class="ans-btn" data-val="C">C) Protože byla unavená a nepozorná.</button><button class="ans-btn" data-val="D">D) Protože chtěla s kolegy rychle odjet domů.</button></div><div class="explain">✗ Správně: <b>C) Protože byla unavená a nepozorná.</b></div></div><div class="q" data-correct="A"><div class="q-text"><span class="q-num">11.</span>Proč začala Gabriela hrát na housle?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Protože se jí líbily sestřiny housle.</button><button class="ans-btn" data-val="B">B) Protože chtěla chodit na konzervatoř.</button><button class="ans-btn" data-val="C">C) Protože ji sestra naučila hrát na housle.</button><button class="ans-btn" data-val="D">D) Protože její sestřenice je profesionální houslistka.</button></div><div class="explain">✗ Správně: <b>A) Protože se jí líbily sestřiny housle.</b></div></div><div class="q" data-correct="A"><div class="q-text"><span class="q-num">12.</span>Jak často Gabriela jako dítě cvičila na housle?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Každý den od dvou do šesti.</button><button class="ans-btn" data-val="B">B) Každý den od oběda do večeře.</button><button class="ans-btn" data-val="C">C) Každý den ve škole a o prázdninách.</button><button class="ans-btn" data-val="D">D) Každý den před odchodem do školy.</button></div><div class="explain">✗ Správně: <b>A) Každý den od dvou do šesti.</b></div></div><div class="q" data-correct="C"><div class="q-text"><span class="q-num">13.</span>Chtěla by Gabriela mít děti?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Ano, ale musí si udělat půl roku pauzu.</button><button class="ans-btn" data-val="B">B) Ano, ale kvůli její profesi to není možné.</button><button class="ans-btn" data-val="C">C) Ano, ale bude potřebovat pomoc od rodiny.</button><button class="ans-btn" data-val="D">D) Ano, ale doma s dítětem musí zůstat manžel.</button></div><div class="explain">✗ Správně: <b>C) Ano, ale bude potřebovat pomoc od rodiny.</b></div></div><div class="q" data-correct="D"><div class="q-text"><span class="q-num">14.</span>Proč nechce Gabriela jet nikam na dovolenou?</div><div class="answers ans-col"><button class="ans-btn" data-val="A">A) Protože nesnáší cestování.</button><button class="ans-btn" data-val="B">B) Protože na dovolenou nemá čas.</button><button class="ans-btn" data-val="C">C) Protože její partner nechce cestovat.</button><button class="ans-btn" data-val="D">D) Protože se musí starat o svoje zvířata.</button></div><div class="explain">✗ Správně: <b>D) Protože se musí starat o svoje zvířata.</b></div></div></div><div class="check-row"><button class="check-btn" data-task="ps2-q">Zkontrolovat odpovědi</button><span class="hint-msg" data-hint="ps2-q"></span><span class="score" data-score="ps2-q"></span></div></div>
+<div class="task" id="ps3"><div class="task-badge"><span class="pink-star">✦</span> POSLECH, ÚLOHA Č. 3 – ZPRÁVA Z RÁDIA (6 bodů)</div><div class="instruction">Uslyšíte zprávu z rádia. Rozhodněte, jestli jsou věty 15–20 pravda (ANO), nebo nejsou pravda (NE). Zprávu uslyšíte dvakrát.</div><div id="ps3-q"><div class="q" data-correct="NE"><div class="q-text"><span class="q-num">15.</span>V současnosti má pražské metro 59 stanic.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>NE</b>.</div></div><div class="q" data-correct="ANO"><div class="q-text"><span class="q-num">16.</span>Metro v budoucnu povede až na mezinárodní letiště.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>ANO</b>.</div></div><div class="q" data-correct="ANO"><div class="q-text"><span class="q-num">17.</span>Pražské metro je v provozu více než 30 let.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>ANO</b>.</div></div><div class="q" data-correct="ANO"><div class="q-text"><span class="q-num">18.</span>První projekt metra v Praze vznikl už před sto lety.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>ANO</b>.</div></div><div class="q" data-correct="NE"><div class="q-text"><span class="q-num">19.</span>Po druhé světové válce byla veřejná doprava oblíbenější než automobilová.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>NE</b>.</div></div><div class="q" data-correct="NE"><div class="q-text"><span class="q-num">20.</span>První stanicí pražského metra byla stanice Anděl.</div><div class="answers"><button class="ans-btn" data-val="ANO">ANO</button><button class="ans-btn" data-val="NE">NE</button></div><div class="explain">✗ Správně: <b>NE</b>.</div></div></div><div class="check-row"><button class="check-btn" data-task="ps3-q">Zkontrolovat odpovědi</button><span class="hint-msg" data-hint="ps3-q"></span><span class="score" data-score="ps3-q"></span></div></div>
+<div class="task" id="ps4"><div class="task-badge"><span class="pink-star">✦</span> POSLECH, ÚLOHA Č. 4 – ZPRÁVY (5 bodů)</div><div class="instruction">Uslyšíte čtyři krátké zprávy. Napište <b>jedno slovo nebo číslo</b> do vět 21–25. Každou zprávu uslyšíte dvakrát.<br><i>Příklad: 0. Tramvaje nebudou jezdit v sobotu od <b>deseti / 10</b> hodin.</i></div><div class="note-inline" style="margin-bottom:12px">Velká/malá písmena a háčky kontrola nepočítá jako chybu, číslo i slovo („3“ / „tři“) jsou správně.</div><div id="ps4-q"><div class="q" data-correct="března|brezen|breznu"><div class="q-text"><span class="q-num">21.</span>Autobusová linka do ZOO začne jezdit 28. ______ .</div><input class="text-ans" type="text" placeholder="jedno slovo / číslo"><div class="explain">✗ Správná odpověď: <b>března</b></div></div><div class="q" data-correct="víkend|vikendy|kazdy vikend"><div class="q-text"><span class="q-num">22.</span>Autobusová linka do ZOO bude jezdit každý ______ a ve svátky.</div><input class="text-ans" type="text" placeholder="jedno slovo / číslo"><div class="explain">✗ Správná odpověď: <b>víkend</b></div></div><div class="q" data-correct="patnácti|15|patnact|15 stupnu"><div class="q-text"><span class="q-num">23.</span>Nejvyšší teploty na horách dnes budou do ______ stupňů.</div><input class="text-ans" type="text" placeholder="jedno slovo / číslo"><div class="explain">✗ Správná odpověď: <b>patnácti / 15</b></div></div><div class="q" data-correct="tři|3|tri roky|3 roky"><div class="q-text"><span class="q-num">24.</span>Alence jsou ______ roky.</div><input class="text-ans" type="text" placeholder="jedno slovo / číslo"><div class="explain">✗ Správná odpověď: <b>tři / 3</b></div></div><div class="q" data-correct="pokladny|pokladna"><div class="q-text"><span class="q-num">25.</span>Maminka čeká na Alenku u ______ číslo jedna.</div><input class="text-ans" type="text" placeholder="jedno slovo / číslo"><div class="explain">✗ Správná odpověď: <b>pokladny</b></div></div></div><div class="check-row"><button class="check-btn" data-task="ps4-q" data-fuzzy="1">Zkontrolovat odpovědi</button><span class="hint-msg" data-hint="ps4-q"></span><span class="score" data-score="ps4-q"></span></div></div>
+<div class="section-total" data-name="Poslech" data-ratio="0.68" data-tasks="ps1-q,ps2-q,ps3-q,ps4-q"></div>
+<div class="section-divider"><div class="line"></div><div class="label">✍️ Psaní</div><div class="line"></div></div>
+<div class="timer-box" data-min="60"><span>⏱️ Psaní – 60 minut</span><span class="t"></span><button class="start">▶ Spustit</button><button class="reset ghost">↺ Znovu</button></div>
+<div class="task"><div class="task-badge"><span class="pink-star">✦</span> PSANÍ, ÚLOHA Č. 1 – DOTAZNÍK (12 bodů)</div><div class="instruction">Přečtěte si text a odpovězte ve větách na všechny tři otázky dotazníku. Celkem napište <b>minimálně 75 slov</b>.</div><div class="letter-head">Byl/a jste na jednodenním výletu s cestovní kanceláří „CestujTam“.<br>Vyplňte dotazník. Napište celkem minimálně 75 slov.</div><div class="q-label">1. Proč jste si výlet vybral/a?</div><textarea class="write-area sum-part" style="min-height:110px" id="psani-u1-0" placeholder="Napište odpověď celými větami…"></textarea><div class="q-label">2. S čím jste byl/a na výletě spokojen/a?</div><textarea class="write-area sum-part" style="min-height:110px" id="psani-u1-1" placeholder="Napište odpověď celými větami…"></textarea><div class="q-label">3. Co byste na výletě změnil/a?</div><textarea class="write-area sum-part" style="min-height:110px" id="psani-u1-2" placeholder="Napište odpověď celými větami…"></textarea><div class="wc"><span>Celkem za všechny 3 odpovědi</span><span class="n" data-wcsum="psani-u1-0,psani-u1-1,psani-u1-2" data-min="75"></span></div></div>
+<div class="task"><div class="task-badge"><span class="pink-star">✦</span> PSANÍ, ÚLOHA Č. 2 – NEFORMÁLNÍ DOPIS (13 bodů)</div><div class="choice"><div class="c"><span class="letter">A</span>Televize je lepší než kniha.</div><div class="c"><span class="letter">B</span>Jídlo je radost.</div></div><div class="instruction">Vyberte si <b>jedno</b> téma (A, nebo B) a napište svému kamarádovi / své kamarádce dopis. Napište <b>minimálně 100 slov</b>. V dopise:<br>Vyjádřete svůj názor na vybrané téma. Text musí mít:<br>– proč kamarádovi/kamarádce píšete,<br>– vlastní názor,<br>– příklad / vlastní zkušenost,<br>– závěr dopisu.</div><textarea class="write-area" id="psani-u2" data-min="100" placeholder="Ahoj …,"></textarea><div class="wc"><span>Text si zkopírujte a pošlete Taťáně ke kontrole.</span><span class="n" data-wc="psani-u2"></span></div></div>
+<div class="tip" style="margin:-10px 0 18px">⚠️ Pozor: pokud napíšete méně než 55 slov v úloze 1 nebo méně než 70 slov v úloze 2, úloha se nehodnotí (0 bodů).</div><div class="section-divider"><div class="line"></div><div class="label">🗣️ Mluvení</div><div class="line"></div></div>
+<div class="task"><div class="task-badge"><span class="pink-star">✦</span> ÚLOHA Č. 1 – O SOBĚ</div><div class="instruction">Představte se, promluvte o svém zaměstnání nebo studiu a o běžných tématech. Examinátor může položit doplňující otázky.</div><div class="display-card"><h4>Příklady otázek</h4><ul><li>Řekněte nám něco o své rodině.</li><li>Jak vypadá váš dům/byt?</li><li>Co jste dělal/a minulý víkend?</li><li>Jak obvykle vypadá vaše dovolená?</li></ul></div></div>
+<div class="task"><div class="task-badge"><span class="pink-star">✦</span> ÚLOHA Č. 2 – ŘÍZENÁ KONVERZACE NA TÉMA</div><div class="instruction">Vylosujete si 2 karty s tématy a jednu si vyberete. Pak dostanete kartu se dvěma obrázky a odpovíte na konfrontační otázku.</div><div class="two-display"><div class="display-card"><h4>⚽ Sport</h4><p><b>Konfrontační otázka:</b> Který sport byste si vybral/a? Proč?</p><ul><li>Který sport děláte?</li><li>Jak často sportujete?</li><li>Sportujete raději sám/sama, nebo ve skupině? Proč?</li></ul></div><div class="display-card"><h4>📋 Možná témata B1</h4><ul style="columns:2;font-size:12.5px"><li>rodina</li><li>bydlení</li><li>každodenní život</li><li>vzdělání</li><li>zaměstnání</li><li>volný čas</li><li>cestování</li><li>nakupování</li><li>jídlo a pití</li><li>zdraví</li><li>služby</li><li>vztahy</li><li>aktuální události</li><li>hledání cesty</li><li>počasí</li><li>jazyky</li></ul></div></div></div>
+<div class="task"><div class="task-badge"><span class="pink-star">✦</span> ÚLOHA Č. 3 – DIALOG VE DVOJICI</div><div class="instruction">Společně s druhým kandidátem řešíte zadaný úkol a domluvíte se na společném řešení.</div><div class="display-card"><h4>🎬 Chcete jít společně do kina. Domluvte se…</h4><ul><li>Jaký film?</li><li>Kde?</li><li>Jaké místo (řada/sedadlo)?</li><li>Kdy?</li></ul></div></div>
+<div class="credit">@tatiana.sayfutdinova</div><div class="footer-note">Tento materiál je určen pouze pro klienty Taťány Sajfutdinovové. Prosíme, nesdílejte ho dál mimo naši skupinu. Děkujeme za pochopení. 🙏🏼</div>
+</div>
+
+<script>
+(function(){
+  // ---- password gate (rotates weekly between testCCE / CCEtest) ----
+  function isoWeekNumber(d){
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    var day = (d.getUTCDay() + 6) % 7; // Mon=0..Sun=6
+    d.setUTCDate(d.getUTCDate() - day + 3); // nearest Thursday
+    var week1 = new Date(Date.UTC(d.getUTCFullYear(), 0, 4));
+    return 1 + Math.round(((d - week1) / 86400000 - 3 + (week1.getUTCDay() + 6) % 7) / 7);
+  }
+  var currentPassword = (isoWeekNumber(new Date()) % 2 === 0) ? 'testCCE' : 'CCEtest';
+
+  function unlock(){
+    var overlay = document.getElementById('gateOverlay');
+    var page = document.getElementById('page-content');
+    if (overlay) overlay.style.display = 'none';
+    if (page) page.style.display = 'block';
+    try { sessionStorage.setItem('b1-unlocked', '1'); } catch(e){}
+  }
+
+  var alreadyUnlocked = false;
+  try { alreadyUnlocked = sessionStorage.getItem('b1-unlocked') === '1'; } catch(e){}
+  if (alreadyUnlocked){
+    unlock();
+  } else {
+    var gateBtn = document.getElementById('gateBtn');
+    var gateInput = document.getElementById('gateInput');
+    var gateError = document.getElementById('gateError');
+    function tryUnlock(){
+      var val = (gateInput.value || '').trim().toLowerCase();
+      if (val === currentPassword.toLowerCase()){
+        unlock();
+      } else {
+        gateError.classList.add('show');
+      }
+    }
+    if (gateBtn){
+      gateBtn.addEventListener('click', tryUnlock);
+      gateInput.addEventListener('keydown', function(e){
+        if (e.key === 'Enter') tryUnlock();
+      });
+    }
+  }
+
+  // watermark
+  var wm = document.getElementById('watermark');
+  var full = 'POUZE PRO NAŠI SKUPINU · '.repeat(6);
+  for (var r = 0; r < 7; r++){
+    var s = document.createElement('span');
+    s.textContent = full;
+    s.style.top = (r * 15 - 5) + '%';
+    s.style.left = '-20%';
+    wm.appendChild(s);
+  }
+
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
+
+  function normalize(str){
+    return str
+      .toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '') // strip diacritics
+      .replace(/[.,;!?]/g, '')
+      .trim()
+      .replace(/\s+/g, ' ');
+  }
+
+  // button-based answers (ANO/NE, A-D, A-C, A-F)
+  document.querySelectorAll('.q').forEach(function(q){
+    var btns = q.querySelectorAll('.ans-btn');
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        if (b.disabled) return;
+        btns.forEach(function(x){ x.classList.remove('selected'); });
+        b.classList.add('selected');
+        q.dataset.selected = b.dataset.val;
+      });
+    });
+  });
+
+  document.querySelectorAll('.check-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var containerId = btn.dataset.task;
+      var container = document.getElementById(containerId);
+      var qs = container.querySelectorAll('.q');
+      var hint = document.querySelector('[data-hint="' + containerId + '"]');
+      var scoreEl = document.querySelector('[data-score="' + containerId + '"]');
+      var isFuzzy = btn.dataset.fuzzy === '1';
+
+      var unanswered = 0;
+      qs.forEach(function(q){
+        if (isFuzzy){
+          var input = q.querySelector('.text-ans');
+          if (!input.value.trim()) unanswered++;
+        } else if (!q.dataset.selected){
+          unanswered++;
+        }
+      });
+      if (unanswered > 0){
+        hint.textContent = 'Zodpovězte prosím ještě ' + unanswered + (unanswered === 1 ? ' otázku.' : ' otázky/otázek.');
+        return;
+      }
+      hint.textContent = '';
+
+      var correctCount = 0;
+      qs.forEach(function(q){
+        var correct = q.dataset.correct;
+        var explain = q.querySelector('.explain');
+        var isRight = false;
+
+        if (isFuzzy){
+          var input = q.querySelector('.text-ans');
+          input.disabled = true;
+          var accepted = correct.split('|').map(normalize);
+          isRight = accepted.indexOf(normalize(input.value)) !== -1;
+          input.classList.add(isRight ? 'correct' : 'incorrect');
+        } else {
+          var selected = q.dataset.selected;
+          var btns = q.querySelectorAll('.ans-btn');
+          btns.forEach(function(b){
+            b.disabled = true;
+            b.classList.remove('selected');
+            if (b.dataset.val === selected && selected === correct){ b.classList.add('correct'); }
+            else if (b.dataset.val === selected && selected !== correct){ b.classList.add('incorrect'); }
+            else if (b.dataset.val === correct){ b.classList.add('reveal'); }
+          });
+          isRight = (selected === correct);
+        }
+
+        if (isRight){ correctCount++; }
+        else if (explain){ explain.classList.add('show'); }
+      });
+
+      scoreEl.textContent = 'Výsledek: ' + correctCount + ' / ' + qs.length;
+      scoreEl.classList.add('show');
+      scoreEl.classList.add(correctCount === qs.length ? 'good' : 'bad');
+      btn.disabled = true;
+    });
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  // ---- word counters ----
+  function wc(t){ return (t.trim().match(/\S+/g) || []).length; }
+  document.querySelectorAll('.write-area:not(.sum-part)').forEach(function(ta){
+    var min = parseInt(ta.dataset.min || '0', 10);
+    var n = document.querySelector('[data-wc="' + ta.id + '"]');
+    function upd(){ var w = wc(ta.value); n.textContent = w + ' / ' + min + ' slov'; n.classList.toggle('ok', w >= min); }
+    ta.addEventListener('input', upd); upd();
+  });
+  document.querySelectorAll('[data-wcsum]').forEach(function(n){
+    var tas = n.dataset.wcsum.split(',').map(function(id){ return document.getElementById(id); });
+    var min = parseInt(n.dataset.min, 10);
+    function upd(){ var w = 0; tas.forEach(function(t){ w += wc(t.value); }); n.textContent = w + ' / ' + min + ' slov'; n.classList.toggle('ok', w >= min); }
+    tas.forEach(function(t){ t.addEventListener('input', upd); }); upd();
+  });
+  // allow typing/pasting own text in textareas (global copy block stays for the rest)
+  document.addEventListener('copy', function(e){ if (e.target && e.target.classList && e.target.classList.contains('write-area')) e.stopImmediatePropagation(); }, true);
+
+  // ---- timers ----
+  document.querySelectorAll('.timer-box').forEach(function(box){
+    var total = parseInt(box.dataset.min, 10) * 60, left = total, iv = null;
+    var t = box.querySelector('.t'), start = box.querySelector('.start'), reset = box.querySelector('.reset');
+    function fmt(sec){ var a = Math.abs(sec); var m = Math.floor(a/60), s = a%60; return (sec<0?'-':'') + m + ':' + (s<10?'0':'') + s; }
+    function draw(){ t.textContent = fmt(left); box.classList.toggle('over', left < 0); }
+    start.addEventListener('click', function(){
+      if (iv){ clearInterval(iv); iv = null; start.textContent = '▶ Pokračovat'; return; }
+      iv = setInterval(function(){ left--; draw(); }, 1000); start.textContent = '⏸ Pauza';
+    });
+    reset.addEventListener('click', function(){ clearInterval(iv); iv = null; left = total; start.textContent = '▶ Spustit'; draw(); });
+    draw();
+  });
+
+  // ---- section totals (after all tasks of a section are checked) ----
+  function updateTotals(){
+    document.querySelectorAll('.section-total').forEach(function(box){
+      var ids = box.dataset.tasks.split(','), sum = 0, max = 0, done = true;
+      ids.forEach(function(id){
+        var c = document.getElementById(id); if (!c) return;
+        var qs = c.querySelectorAll('.q'); max += qs.length;
+        var sc = document.querySelector('[data-score="' + id + '"]');
+        if (!sc || !sc.classList.contains('show')) { done = false; return; }
+        sum += parseInt(sc.textContent.replace(/[^0-9\/]/g,'').split('/')[0], 10) || 0;
+      });
+      if (!done) return;
+      var need = Math.ceil(max * parseFloat(box.dataset.ratio || '0.68'));
+      var pass = sum >= need;
+      box.innerHTML = (pass ? '🎉 ' : '💪 ') + '<b>' + box.dataset.name + ': ' + sum + ' / ' + max + ' bodů</b><br>' +
+        (pass ? 'Gratulujeme! To by na zkoušce stačilo.' : 'Na zkoušce potřebujete alespoň <b>' + need + ' bodů</b>. Ještě trochu cvičení!');
+      box.classList.add('show'); box.classList.toggle('fail', !pass);
+    });
+  }
+  document.querySelectorAll('.check-btn').forEach(function(b){ b.addEventListener('click', function(){ setTimeout(updateTotals, 0); }); });
+})();
+</script>
+
+</body>
+</html>
